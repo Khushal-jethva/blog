@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./particles/head') %>
+<body>
+    
+    <%- include('./particles/nav') %>
+     <div class="container mt-3">
+        <h5 ><%= blog.title%></h5>
+        <img src="<%= blog.coverImgUrl %>" width="500px" height="500px" alt="...">
+        <p><%= blog.body %></p>
+     </div>
+     <div class="container mt-3">
+        <h6>Published By </h6>
+        <img src="<%= blog.createdBy.profileImgUrl %>" alt="" width="50px">
+        
+        <%= blog.createdBy.fullname %>
+     </div>
+     
+<!-- comments form  -->
+     <% if (locals.user) { %>
+      <div class="container mt-3">
+      <h2>Comments(<%= comments.length %>)</h2>
+      <form action="/blog/comment/<%= blog._id %>" method="post">
+         <div class="mb-3">
+      
+         <input type="text" class="form-control" id="content" name="content" placeholder=" Add Comment">
+         <button class="btn btn-primary" type="submit">Add</button>
+         </div>
+      </form>
+     </div>
+     <% } %>
+     
+
+<!-- comments showing  -->
+     <div class="container mt-3">
+      <% comments.forEach(comments => {%>
+          <img src="<%= blog.createdBy.profileImgUrl %>" alt="" width="30px">
+        
+        <%= comments.createdBy.fullname %>:
+        <pre><%= comments.content %></pre>
+     <%  });%>
+     </div>
+    <%- include('./particles/scripts') %>
+</body>
+</html>
